@@ -1,10 +1,18 @@
 import { Component } from '@angular/core';
+import { Observable } from "rxjs";
+import { Dog, DogService } from "./dog.service";
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `<img *ngIf="doggo$ | async as doggo" [src]="doggo.message">`,
 })
 export class AppComponent {
-  title = 'http-mock';
+  title = "http-mock";
+  doggo$: Observable<Dog>;
+
+  constructor(private dogService: DogService) {
+    this.doggo$ = dogService.randomDog()
+    console.log(this.doggo$)
+  }
+
 }
